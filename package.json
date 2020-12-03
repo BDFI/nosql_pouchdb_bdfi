@@ -1,0 +1,12 @@
+{
+    "name": "nosql_pouchdb_bdfi",
+    "author": "ebarra",
+    "license": "GNU",
+    "version": "0.0.0",
+    "info": {
+        "githubURL": "ebarra/nosql_pouchdb_bdfi",
+        "serverUrl": "https://autocorector.dit.upm.es/",
+        "courseId": "6851",
+        "assignmentId": "101196"
+    }
+}
