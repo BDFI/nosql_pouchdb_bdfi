@@ -112,7 +112,6 @@ describe("Sample test", function () {
             this.msg_err = error_critical;
             should.not.exist(error_critical);
         } else {
-            //debug(contentindex);
             let regularexp = /pouchdb.js|pouchdb.min.js/;
             regularexp.test(contentindex).should.be.equal(true);
         }
@@ -120,14 +119,13 @@ describe("Sample test", function () {
 
     it("3: Comprobando que la página app.js crea una BBDD PouchDB", async function () {
         this.name = "";
-        this.score = 1;
+        this.score = 2;
         this.msg_ok = `La página crea una BBDD pouchdb correctamente.`;
         this.msg_err = `La página app.js NO crea una BBDD pouchdb correctamente.`;
         if (error_critical) {
             this.msg_err = error_critical;
             should.not.exist(error_critical);
         } else {
-            //debug(contentapp);
             let regularexp = /=\s+new\s+PouchDB/;
             regularexp.test(contentapp).should.be.equal(true);
         }
@@ -135,17 +133,45 @@ describe("Sample test", function () {
 
     it("4: Comprobando que se replica PouchDB local en CouchDB remoto", async function () {
         this.name = "";
-        this.score = 1;
+        this.score = 2;
         this.msg_ok = `Se replica pouchdb correctamente.`;
         this.msg_err = `NO se replica pouchdb correctamente.`;
         if (error_critical) {
             this.msg_err = error_critical;
             should.not.exist(error_critical);
         } else {
-            //debug(contentapp);
             let regularexp = /db.replicate.to/;
             regularexp.test(contentapp).should.be.equal(true);
             regularexp = /db.replicate.from/;
+            regularexp.test(contentapp).should.be.equal(true);
+        }
+    });
+
+    it("5: Comprobando que se inserta y se edita un TODO en pouchdb", async function () {
+        this.name = "";
+        this.score = 2;
+        this.msg_ok = `Se inserta y se edita un TODO correctamente.`;
+        this.msg_err = `NO se inserta o edita un TODO con db.put correctamente.`;
+        if (error_critical) {
+            this.msg_err = error_critical;
+            should.not.exist(error_critical);
+        } else {
+            let regularexp = /db.put/g;
+            let ocurrencias = contentapp.match(regularexp).length;
+            ocurrencias.should.be.above(1);
+        }
+    });
+
+    it("6: Comprobando que se borra un TODO en pouchdb", async function () {
+        this.name = "";
+        this.score = 2;
+        this.msg_ok = `Se borra un TODO correctamente.`;
+        this.msg_err = `NO se borra un TODO con db.remove correctamente.`;
+        if (error_critical) {
+            this.msg_err = error_critical;
+            should.not.exist(error_critical);
+        } else {
+            let regularexp = /db.remove/;
             regularexp.test(contentapp).should.be.equal(true);
         }
     });
