@@ -12,7 +12,7 @@
 3. Activar el CORS: en configuración cambiar en Main config > "enable_cors = true" y marcar en CORS > All domains ( * )
 4. En los permisos de la base de datos "todos_remote" acceder a sus permisos y quitar todos los usuarios que haya en members y admins, tanto en users como roles
 
-Siguiendo estos pasos corriendo el autocrector debería pasar todos los prechecks
+Siguiendo estos pasos corriendo el autocorector debería pasar todos los prechecks
 
 
 ## Objetivos
