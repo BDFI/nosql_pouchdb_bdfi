@@ -16,11 +16,8 @@ Siguiendo estos pasos corriendo el autocorector debería pasar todos los prechec
 
 ## Pasos a seguir
 
-1. añadir 
-```
-<script src="//cdn.jsdelivr.net/npm/pouchdb@7.1.1/dist/pouchdb.min.js"></script>
-```
-a index.html
+1. Crear en la base de datos "todos_remote" un documento con que incluya el campo: "title": "vuestro correo@alumnos.upm.es"
+2. Hacer el pull con los cambios realizados en index.html y app.js
 
 ## Objetivos
  * Objetivo 1
