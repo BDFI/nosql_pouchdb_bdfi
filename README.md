@@ -5,6 +5,16 @@
 <br/><br/><br/>
 
 # nosql_pouchdb_bdfi
+## Antes de empezar: Consejos
+1. Instalar Couchdb en WINDOWS directamente instalando el programa descargando el "apache-couchdb-3.1.1.msi"
+(Intentando hacerlo funcionar en docker me llevó 1 hora y no lo conseguí, de esta forma se tardan 2 minutos)
+2. Entrando en la interfaz web de couchdb creamos desde ahí la base de datos "todos_remote"
+3. Activar el CORS: en configuración cambiar en Main config > "enable_cors = true" y marcar en CORS > All domains ( * )
+4. En los permisos de la base de datos "todos_remote" acceder a sus permisos y quitar todos los usuarios que haya en members y admins, tanto en users como roles
+
+Siguiendo estos pasos corriendo el autocrector debería pasar todos los prechecks
+
+
 ## Objetivos
  * Objetivo 1
  * Objetivo 2
