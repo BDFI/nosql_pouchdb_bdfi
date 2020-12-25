@@ -1,43 +1,64 @@
 'use strict';
   var ENTER_KEY = 13;
   var newTodoDom = document.getElementById('new-todo');
-  //TODO this state should be changed for a pouchdb database
-  var state = [];
+  var db = new PouchDB('todos');
+  var remoteCouch = 'http://localhost:5984/_utils/#database/todos_remote';
 
-  //TODO add db.changes(...) and a function databaseChangeEvent that gets
-  //everything from the database and redraws the UI
+  db.changes({
+  	since: 'now',
+  	live: true
+  }).on('change', databaseChangeEvent);
 
-  //TODO add remote couchdb database and sync function
+  async function databaseChangeEvent() {
+  	try{
+  		var doc = await db.allDocs({include_docs: true, descending: true});
+  		var todos = doc.rows.map(function(item,index){
+  			return item.doc;
+  		});
+  		redrawTodosUI(todos);
+  	} catch (err) {
+  	  console.log(err);
+  	}
+  }
+
+ function sync(){
+  syncDom.setAttribute('data-sync-state', 'syncing');
+  var opts = {live: true};
+  db.replicate.to(remoteCouch, opts, syncError);
+  db.replicate.from(remoteCouch, opts, syncError);
+ }
+
+ function syncError() {
+ 	syncDom.setAttribute('data-sync-state', 'error');
+ }
 
   //-------------STATE modifiers, create, edit, delete todo
 
   // We have to create a new todo document and enter it in the database
-  function addTodo(text) {
+  async function addTodo(text) {
     var todo = {
       _id: new Date().toISOString(),
       title: text,
       completed: false
     };
-    //TODO instead of pushing to the state, add the todo to the database
-    //also remove the redrawTodosUI, because with pouchdb the app redraws itself when there is a database change
-    state.push(todo);
-    redrawTodosUI(state);
+    try{
+     let result = await db.put(todo);
+     console.log('Successfully posted a todo!' + result.id + " " + result.rev);
+    } catch (err) {
+
+ console.log(err);
+    }
   }
 
   //edit Todo. This is not necessary because todo is passed as reference and so when we modify
   //it  in the calling method it is modified in the state
-  function editTodo(todo){
-    //TODO perform a put to the database
-    //also remove the redrawTodosUI, because with pouchdb the app redraws itself when there is a database change
-    redrawTodosUI(state);
+  async function editTodo(todo){
+    await db.put(todo);
   }
 
   // User pressed the delete button for a todo, delete it
-  function deleteTodo(todo) {
-    //TODO perform a remove to the database
-    //also remove the redrawTodosUI, because with pouchdb the app redraws itself when there is a database change
-    state = state.filter((item) => item._id !== todo._id);
-    redrawTodosUI(state);
+  async function deleteTodo(todo) {
+    await db.remove(todo);
   }
 
   //------------- EVENTS HANDLERS
@@ -147,5 +168,7 @@
     //the event occurred
     addEventListeners();
     redrawTodosUI(state);
-    //TODO add a call to sync method if remotedb exist
+    if (remoteCouch) {
+    	sync();
+    }
   });
