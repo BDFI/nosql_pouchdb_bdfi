@@ -14,6 +14,13 @@
 
 Siguiendo estos pasos corriendo el autocorector debería pasar todos los prechecks
 
+## Pasos a seguir
+
+1. añadir 
+```
+<script src="//cdn.jsdelivr.net/npm/pouchdb@7.1.1/dist/pouchdb.min.js"></script>
+```
+a index.html
 
 ## Objetivos
  * Objetivo 1
