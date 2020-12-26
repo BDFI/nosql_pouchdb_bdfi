@@ -1,7 +1,7 @@
 'use strict';
   var ENTER_KEY = 13;
   var newTodoDom = document.getElementById('new-todo');
-  var db = new PouchDB('todos');
+  var db = new PouchDB('http://localhost:5984/todos_remote')
   var remoteCouch = 'http://localhost:5984/_utils/#database/todos_remote';
 
   db.changes({
