@@ -167,7 +167,8 @@
   document.addEventListener('DOMContentLoaded', (event) => {
     //the event occurred
     addEventListeners();
-    redrawTodosUI(state);
+    // redrawTodosUI(state);
+    databaseChangeEvent();
     if (remoteCouch) {
     	sync();
     }
